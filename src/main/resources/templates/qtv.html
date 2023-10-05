@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/css/normalize.css">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/base.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+          href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700&display=swap"
+          rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+  <title>Quản trị viên</title>
+</head>
+
+<body>
+<header>
+  <div style="padding-left: 20px;">
+    <p style="font-size: 25px;font-weight: 700;line-height: 60px;">GIAO DIỆN CHO QUẢN TRỊ VIÊN</p>
+  </div>
+  <a href="login.html" style="padding-right: 20px;" id="logout_button">
+    <div style="transform: translate(-10px, 4px);"><img id="logout_icon_1"
+                                                        src="/static/img/switch-sever-border.png" alt="">
+      <img id="logout_icon_2" src="/static/img/swittchsever-btn.png" alt="">
+    </div>
+    <p style="font-size: 25px; font-weight: 700; line-height: 60px;">ĐĂNG XUẤT</p>
+  </a>
+</header>
+<div style="display: flex; justify-content: center; margin-top: 60px;">
+  <button id="create_tablepoint" class="btn">Tạo bảng điểm</button>
+
+</div>
+<form class="unavailable" name="choose_sub" th:action="@{/}" style="padding: 0 100px; margin: 20px 0;">
+  <select  class="inline-block" name="subject">
+    <option class="opt_subj" value="CHP">Chọn học phần</option>
+    <option th:each="subject:${subject_list}" class="opt_subj" value="CNPM" th:text="${subject.tenmonhoc}"></option>
+  </select>
+</form>
+<form action="" name="choose_class" class="unavailable" style="width: 100%; padding: 0 100px; margin: 20px 0;">
+  <select  class="inline-block" name="subj">
+    <option class="opt_subj" value="CLHP">Chọn lớp học phần</option>
+    <option th:each="i: ${#numbers.sequence(0,classes.size()-1)}" class="opt_subj"  th:text="${classes[i]}"></option>
+  </select>
+</form>
+<form action="" name="choose_tea" class="unavailable" style="width: 100%; padding: 0 100px; margin: 20px 0;">
+  <select class="inline-block" name="tea">
+  <option class="opt_tea" value="CGV">Chọn giảng viên phụ trách</option>
+  <option th:each="teacher:${teacher_list}" class="opt_tea" value="NA" th:text="${teacher.ten}"></option>
+</select>
+</form>
+<div style="display: flex; justify-content: center">
+  <button style="width: 100%;" id="import_data_class" class="btn unavailable">Nhập dữ liệu</button>
+</div>
+
+<table class="table unavailable" id="point">
+  <tbody>
+  <tr class="row-table">
+    <td class="col-header-table-2" style="text-align: center;">
+      <p>STT</p>
+    </td>
+    <td class="col-header-table-4" style="text-align: center;">
+      <p>Tên sinh viên</p>
+    </td>
+    <td class="col-header-table-4" style="text-align: center;">
+      <p>Mã sinh viên</p>
+    </td>
+    <td class="col-header-table-2" style="text-align: center;">
+      <p>Điểm thành phần</p>
+    </td>
+    <td class="col-header-table-2" style="text-align: center;">
+      <p>Điểm thi</p>
+    </td>
+    <td class="col-header-table-2" style="text-align: center;">
+      <p>Điểm tổng kết</p>
+    </td>
+  </tr>
+  <tr th:each="student:${student_list}" class="row-table">
+    <td class="col-table-1" style="text-align: center;">
+      <p th:text="${student.id}"></p>
+    </td>
+    <td class="col-table-2" style="text-align: center;">
+      <p class="name_student" th:text="${student.ten}"></p>
+    </td>
+    <td class="col-table-3" style="text-align: center;">
+      <p class="student_code" th:text="${student.masinhvien}"></p>
+    </td>
+    <td class="col-table-3" style="text-align: center;">
+      <input type="text"  class="prosess_point">
+    </td>
+    <td class="col-table-4" style="text-align: center;">
+      <input type="text" class="test_point">
+    </td>
+    <td class="col-table-4" style="text-align: center;">
+      <input type="text"  class="avg_point">
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<div style="float: right; margin-right: 30px;">
+  <button id="cancel_tablepoint" class="btn unavailable">Hủy bảng điểm</button>
+  <button id="save_sent" class="btn unavailable">Lưu và chuyển tiếp bảng điểm</button>
+</div>
+
+<script>
+  const Pointtable = document.getElementById('create_tablepoint')
+  const cancelPointtable = document.getElementById('cancel_tablepoint')
+  const importData = document.getElementById('import_data_class')
+  const save_sent=document.getElementById('save_sent')
+  let choose_sub = document.forms['choose_sub'];
+  let choose_tea=document.forms['choose_tea'];
+  let choose_class= document.forms['choose_class'];
+  const table= document.getElementById('point')
+  Pointtable.addEventListener('click', function(){
+    choose_sub.classList.remove('unavailable')
+    choose_sub.classList.add('block')
+    choose_class.classList.remove('unavailable')
+    choose_class.classList.add('block')
+    choose_tea.classList.remove('unavailable')
+    choose_tea.classList.add('block')
+    cancelPointtable.classList.remove('unavailable')
+    cancelPointtable.classList.add('inline')
+    save_sent.classList.remove('unavailable')
+    save_sent.classList.add('block')
+    table.classList.remove('unavailable')
+    table.classList.add('inline')
+    importData.classList.remove('unavailable')
+    importData.classList.add('block')
+
+  })
+  cancelPointtable.addEventListener('click', function(){
+    choose_sub.classList.remove('block')
+    choose_sub.classList.add('unavailable')
+    choose_class.classList.remove('block')
+    choose_class.classList.add('unavailable')
+    choose_tea.classList.remove('block')
+    choose_tea.classList.add('unavailable')
+    cancelPointtable.classList.remove('inline')
+    cancelPointtable.classList.add('unavailable')
+    save_sent.classList.remove('block')
+    save_sent.classList.add('unavailable')
+    table.classList.remove('block')
+    table.classList.add('unavailable')
+    importData.classList.remove('block')
+    importData.classList.add('unavailable')
+  })
+
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <script>
+    function myFunction(){
+      const y = window.document.getElementById("options").value;
+      const x = window.document.getElementById("namesearch").value;
+      if(y==="Tên"){
+        window.location="/findTeacherByName/"+x;
+      }
+      else if(y==="Mã giảng viên"){
+        window.location="/findTeacherByCode/"+x;
+      }
+    }
+  </script>
+</head>
+<body>
+<div class="container">
+  <div>
+    <select name="options" id="options">
+      <option value="Tên">Tên</option>
+      <option value="Mã giảng viên">Mã giảng viên</option>
+    </select>
+    <input type="text" placeholder="Texting..." id="namesearch" name="namesearch" />
+    <a onclick="myFunction()" >Search</a>
+  </div>
+  <table class="table">
+    <thead>
+    <tr>
+      <th></th>
+      <th>Họ và tên</th>
+      <th>Mã giảng viên</th>
+      <th>Mật khẩu</th>
+      <th>Hành động</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="teacher : ${list_teacher}">
+      <td></td>
+      <td th:text="${teacher.ten}"></td>
+      <td th:text="${teacher.magiaovien}"></td>
+      <td th:text="${teacher.password}"></td>
+      <td>
+        <a th:href="@{'/editTeacher/'+${teacher.getId()}}">Sửa</a>
+        <a th:href="@{'/deleteTeacher/'+${teacher.getId()}}">Xóa</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <ul class="pagination" th:each="i: ${#numbers.sequence(1,totalPage)}">
+    <th:block th:switch="${i!= currentPage}">
+      <li><a th:case="true" th:href="@{'/Student?page=' +${i}}">[[${i}]]</a></li>
+      <li class="active"><a th:case="false" class="active">[[${i}]]</a></li>
+    </th:block>
+  </ul>
+</div>
+
+</body>
+</html>

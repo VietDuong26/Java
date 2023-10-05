@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Thêm mới sinh viên</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <h2>Vertical (basic) form</h2>
+  <form th:action="@{/editStudent}" method="post" th:object="${student}">
+    <div class="form-group">
+    <label >STT</label>
+    <input type="text" readonly="true" th:field="*{id}" class="form-control" id="id" name="id">
+    </div>
+    <div class="form-group">
+      <label >Họ và Tên:</label>
+      <input type="text" th:field="*{ten}" class="form-control" id="name" name="name">
+    </div>
+    <div class="form-group">
+      <label>Lớp:</label>
+      <input type="text" th:field="*{lop}" class="form-control" id="lop" name="lop">
+    </div>
+    <div class="form-group">
+      <label>Mã sinh viên:</label>
+      <input type="text" th:field="*{masinhvien}" class="form-control" id="msv" name="msv">
+    </div>
+    <button type="submit" class="btn btn-default">Sửa</button>
+  </form>
+</div>
+</body>
+</html>

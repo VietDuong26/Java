@@ -1,0 +1,112 @@
+:root {
+    --black-olive: #413F3D;
+    --light-gray: #D8CFD0;
+    --autometalsaurus: #697184;
+    --quick-silver: #B1A6A4;
+    --isabelline: #F2F1EF;
+}
+
+* {
+    box-sizing: inherit;
+}
+
+html{
+    font-size: 16px;
+    line-height: 1.6rem;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    box-sizing: border-box;
+}
+
+.grid {
+    width: 1200px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.gird__full-width {
+    width: 100%
+}
+
+.grid__row {
+    display: flex;
+    flex-wrap: wrap
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+table {
+    width: 100%;
+    margin-top: 50px;
+}
+.row-table,
+.col-table-1,
+.col-table-2,
+.col-table-3,
+.col-table-4,
+.col-table-5,
+.col-table-6,
+.col-table-7,
+.col-table-8,
+.col-header-table-1,
+.col-header-table-2,
+.col-header-table-3,
+.col-header-table-4,
+.col-header-table-5,
+.col-header-table-6,
+.col-header-table-7,
+.col-header-table-8 {
+    background: transparent;
+    text-align: center;
+    border: #f7b343 solid 1px;
+    height: 40px;
+}
+
+.col-table-1 {
+    font-weight: bold;
+    width: 100px;
+}
+.col-table-2 {
+    font-weight: bold;
+    width: 250px;
+    text-align: left !important;
+}
+
+input[type="number"] {
+    width: 120px;
+    height: 30px;
+}
+
+
+
+.col-table-3,
+.col-table-4,
+.col-table-5,
+.col-table-6,
+.col-table-7,
+.col-table-8 {
+    width: 150px;
+}
+
+.col-table-1,
+.col-table-2,
+.col-table-3,
+.col-table-4,
+.col-table-5,
+.col-table-6,
+.col-table-7,
+.col-table-8 {
+    padding: 16px 0;
+}
+.table {
+    width: 100%;
+    margin: auto;
+}
+
+table .col-table-5 p,
+table .col-table-6 p,
+table .col-table-7 p,
+table .col-table-8 p {
+    width: 150px;
+}

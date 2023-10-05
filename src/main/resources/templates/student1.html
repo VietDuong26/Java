@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/css/normalize.css">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/base.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+          href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700&display=swap"
+          rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+  <title>Sinh viên</title>
+</head>
+
+<body>
+<header>
+  <div style="padding-left: 20px;">
+    <p style="font-size: 25px;font-weight: 700;line-height: 60px;">GIAO DIỆN CHO SINH VIÊN</p>
+  </div>
+  <a href="./index.html" style="padding-right: 20px;" id="logout_button">
+    <div style="transform: translate(-10px, 4px);"><img id="logout_icon_1"
+                                                        src="/static/img/switch-sever-border.png" alt="">
+      <img id="logout_icon_2" src="/static/img/swittchsever-btn.png" alt="">
+    </div>
+    <p style="font-size: 25px; font-weight: 700; line-height: 60px;">ĐĂNG XUẤT</p>
+  </a>
+</header>
+<div id="content">
+  <div id="display_info">
+    <div class="info_student">
+      <p class="text-bold">Họ tên:</p>
+      <p th:text="${student.ten}"></p>
+    </div>
+    <div class="info_student">
+      <p class="text-bold">Mã sinh viên:</p>
+      <p th:text="${student.masinhvien}"></p>
+    </div>
+    <div class="info_student">
+      <p class="text-bold">Khoa:</p>
+      <p th:text="${student.khoa}"></p>
+    </div>
+    <div class="info_student">
+      <p class="text-bold">Xếp loại:</p>
+      <p>Khá</p>
+    </div>
+    <div class="info_student">
+      <p class="text-bold">Tổng số tín chỉ:</p>
+      <p th:text="${tongsotinchi}"></p>
+    </div>
+    <div class="info_student">
+      <p class="text-bold">Số tín chỉ đã ích lũy:</p>
+      <p></p>
+    </div>
+  </div>
+  <div id="display_point">
+    <table class="inline-table" id="l21cn3_point">
+      <tbody>
+      <tr class="row-table">
+        <td class="col-header-table-1" style="text-align: center;">
+          <p>STT</p>
+        </td>
+        <td class="col-header-table-2" style="text-align: center;">
+          <p>Tên học phần</p>
+        </td>
+        <td class="col-header-table-3" style="text-align: center;">
+          <p>Số tín chỉ</p>
+        </td>
+        <td class="col-header-table-3" style="text-align: center;">
+          <p>Điểm quá trình</p>
+        </td>
+        <td class="col-header-table-4" style="text-align: center;">
+          <p>Điểm thi</p>
+        </td>
+        <td class="col-header-table-5" style="text-align: center;">
+          <p>Điểm tổng kết</p>
+        </td>
+        <td class="col-header-table-6" style="text-align: center;">
+          <p>Điểm số</p>
+        </td>
+        <td class="col-header-table-7" style="text-align: center;">
+          <p>Điểm chữ</p>
+        </td>
+        <td class="col-header-table-8" style="text-align: center;">
+          <p>Ghi chú</p>
+        </td>
+      </tr>
+      <tr th:each="subject:${list}" class="row-table">
+        <td class="col-table-1" style="text-align: center;">
+          <p th:text="${subject.id}"></p>
+        </td>
+        <td class="col-table-2" style="text-align: center;">
+          <p class="name_student" th:text="${subject.tenmonhoc}"></p>
+        </td>
+        <td class="col-table-3" style="text-align: center;">
+          <p class="number_tc" th:text="${subject.sotinchi}"></p>
+        </td>
+        <td class="col-table-3" style="text-align: center;">
+          <p  class="prosess_point" th:text="${subject.diemthanhphan}"></p>
+        </td>
+        <td class="col-table-4" style="text-align: center;">
+          <p  class="test_point" th:text="${subject.diemthi}"></p>
+        </td>
+        <td class="col-table-5" style="text-align: center;">
+          <p class="avg_point" th:text="${subject.tbchp}" ></p>
+        </td>
+        <td class="col-table-6" style="text-align: center;">
+          <p  class="number_point" th:text="${subject.diemso}"></p>
+        </td>
+        <td class="col-table-7" style="text-align: center;" >
+          <p class="word_point" th:text="${subject.diemchu}"></p>
+        </td>
+        <td class="col-table-7" style="text-align: center;" >
+          <p class="note" th:text="${subject.note}"></p>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div style="float: right;" class="inline-block" id="button_for_student">
+      <button id="display_complain" class="btn">Khiếu nại điểm</button>
+      <button id="sent_complain" class="btn unavailable">Gửi khiếu nại</button>
+      <button id="cancel_complain" class="btn unavailable">Hủy khiếu nại</button>
+    </div>
+  </div>
+</div>
+<script>
+  const displayComplain = document.querySelector('#display_complain')
+  const sentComplain = document.querySelector('#sent_complain')
+  const cancelComplain = document.querySelector('#cancel_complain')
+  const checkComplains = document.querySelectorAll('.check_complain')
+
+  displayComplain.addEventListener('click', function () {
+    sentComplain.classList.remove('unavailable')
+    sentComplain.classList.add('inline-block')
+    cancelComplain.classList.remove('unavailable')
+    cancelComplain.classList.add('inline-block')
+    for (const checkComplain of checkComplains) {
+      checkComplain.classList.remove('unavailable')
+      checkComplain.style.display = 'revert'
+    }
+  })
+
+  cancelComplain.addEventListener('click', function () {
+    for (const checkComplain of checkComplains) {
+      checkComplain.classList.add('unavailable')
+      checkComplain.style.display = null
+    }
+    sentComplain.classList.add('unavailable')
+    sentComplain.classList.remove('inline-block')
+    cancelComplain.classList.add('unavailable')
+    cancelComplain.classList.remove('inline-block')
+  })
+</script>
+</body>
+
+</html>

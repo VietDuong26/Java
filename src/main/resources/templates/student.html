@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <script>
+        function myFunction(){
+            const y = window.document.getElementById("options").value;
+            const x = window.document.getElementById("namesearch").value;
+            if(y==="Tên"){
+                window.location="/findStudentByName/"+x;
+            }
+            else if(y==="Mã sinh viên"){
+                window.location="/findStudentByCode/"+x;
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <div>
+        <select name="options" id="options">
+            <option value="Tên">Tên</option>
+            <option value="Mã sinh viên">Mã sinh viên</option>
+        </select>
+        <input type="text" placeholder="Texting..." id="namesearch" name="namesearch" />
+        <a onclick="myFunction()" >Search</a>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Họ và tên</th>
+            <th>Lớp</th>
+            <th>Mã sinh viên</th>
+            <th>Hành động</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="student : ${list_student}">
+            <td></td>
+            <td th:text="${student.ten}"></td>
+            <td th:text="${student.lop}"></td>
+            <td th:text="${student.masinhvien}"></td>
+            <td>
+                <a th:href="@{'/editStudent/'+${student.getId()}}">Sửa</a>
+                <a th:href="@{'/deleteStudent/'+${student.getId()}}">Xóa</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <ul class="pagination" th:each="i: ${#numbers.sequence(1,totalPage)}">
+        <th:block th:switch="${i!= currentPage}">
+            <li><a th:case="true" th:href="@{'/Student?page=' +${i}}">[[${i}]]</a></li>
+            <li class="active"><a th:case="false" class="active">[[${i}]]</a></li>
+        </th:block>
+    </ul>
+</div>
+
+</body>
+</html>
