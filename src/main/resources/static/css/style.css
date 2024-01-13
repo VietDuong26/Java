@@ -1,0 +1,276 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: inherit;
+}
+
+html {
+    background-color: #f3f8fb;
+}
+:root {
+    --black-olive: #413F3D;
+    --light-gray: #D8CFD0;
+    --autometalsaurus: #697184;
+    --quick-silver: #B1A6A4;
+    --isabelline: #F2F1EF;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+html{
+    font-size: 16px;
+    line-height: 1.6rem;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    box-sizing: border-box;
+}
+
+.grid {
+    width: 1200px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.gird__full-width {
+    width: 100%
+}
+
+.grid__row {
+    display: flex;
+    flex-wrap: wrap
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+table {
+    width: 100%;
+    margin-top: 50px;
+}
+.row-table,
+.col-table-1,
+.col-table-2,
+.col-table-3,
+.col-table-4,
+.col-table-5,
+.col-table-6,
+.col-table-7,
+.col-table-8,
+.col-header-table-1,
+.col-header-table-2,
+.col-header-table-3,
+.col-header-table-4,
+.col-header-table-5,
+.col-header-table-6,
+.col-header-table-7,
+.col-header-table-8 {
+    background: transparent;
+    text-align: center;
+    border: #f7b343 solid 1px;
+    height: 40px;
+}
+
+.col-table-1 {
+    font-weight: bold;
+    width: 100px;
+}
+.col-table-2 {
+    font-weight: bold;
+    width: 250px;
+    text-align: left !important;
+}
+
+input[type="number"] {
+    width: 120px;
+    height: 30px;
+}
+
+.col-table-3,
+.col-table-4,
+.col-table-5,
+.col-table-6,
+.col-table-7,
+.col-table-8 {
+    width: 150px;
+}
+
+.col-table-1,
+.col-table-2,
+.col-table-3,
+.col-table-4,
+.col-table-5,
+.col-table-6,
+.col-table-7,
+.col-table-8 {
+    padding: 16px 0;
+}
+.table {
+    width: 100%;
+    margin: auto;
+}
+
+table .col-table-5 p,
+table .col-table-6 p,
+table .col-table-7 p,
+table .col-table-8 p {
+    width: 150px;
+}
+
+#login_screen {
+    text-align: center;
+    padding-top: 20%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -75%);
+    width: 500px;
+}
+
+#title_login {
+    font-size: 30px;
+    font-weight: 700;
+    padding: 20px;
+}
+
+input[type=password], input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.submit {
+    font-size: 17px;
+    border-radius: 5px;
+    padding: 6px 18px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+    background-color: #0485aa;
+    color: #fff;
+    width: 100%;
+    margin: 18px 0;
+}
+
+.unavailable {
+    display: none;
+}
+
+.inline-table {
+    display: inline-table;
+}
+
+header {
+    height: 60px;
+    background-color: #f6f6f6;
+    box-shadow: 1px -1px 17px #000;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+    top: 0;
+}
+
+#logout_button {
+    display: flex;
+    flex-wrap: wrap;
+    text-decoration: none;
+    color: #000;
+}
+
+#logout_icon_2 {
+    width: 50px;
+    filter: brightness(0);
+}
+
+#logout_icon_1 {
+    position: absolute;
+    width: 50px;
+    filter: brightness(0);
+    transition: 1s ease-in-out;
+}
+
+form#check_point {
+    padding-top: 70px;
+}
+
+#list_and_button {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    transition: 0.5s ease-in-out;
+}
+
+#choose_subj {
+    padding-top: 100px;
+    text-align: center;
+    width: 500px;
+    transition: 0.5s ease-in-out;
+}
+
+div#button_for_teacher {
+    padding-top: 100px;
+}
+
+button.btn {
+    padding: 0px 15px;
+    height: 42px;
+    background-color: #000;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    margin: 0 23px;
+    margin-top: 50px;
+    transition: 0.5s ease-in-out;
+}
+
+button.btn:hover {
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+}
+
+button.btn:disabled {
+    pointer-events: none;
+}
+
+button.btn:active {
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+#content {
+    padding: 100px 100px 0 100px;
+}
+
+#display_info {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.info_student {
+    padding: 0 30px;
+}
+
+.block {
+    display: block;
+}
+
+#display_info p {
+    width: max-content;
+    display: inline-block;
+}

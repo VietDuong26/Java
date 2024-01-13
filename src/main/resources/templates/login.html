@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,400;12..96,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/normalize.css">
+    <link rel="stylesheet" href="/static/style/main.css">
+    <link rel="stylesheet" href="/static/style/responsive.css">
+</head>
+<body>
+    <div class="header">
+        <div class="home-btn item-header"><a th:href="@{/index}" class="link-home"><img src="/static/image/home_icon.png" alt="">Trang chủ</a></div>
+        <div class="login-area item-header"><a th:href="@{/login}" class="link-login">Đăng nhập<img src="/static/image/login_icon.png" alt=""></a></div>
+    </div>
+    <div class="containter">
+        <div class="login-place">
+            <div class="login-title"><p id="titlelogin">Xin chào,</p></div>
+            <form class="login-form" th:action="@{/login}" method="post" th:object="${student}">
+                <label for="username">Tên đăng nhập</label><br>
+                    <input type="text" id="username" name="username"  placeholder="Tên đăng nhập..."><br>
+                <label for="pass">Mật khẩu</label><br>
+                    <input type="password" id="pass" name="password" placeholder="Mật khẩu...">
+                <button class="commom-btn" type="submit">ĐĂNG NHẬP</button>
+            </form>
+        </div>
+        </div>
+    </div>
+<script>
+    if (location.href == 'http://localhost:8080/login?error') {document.getElementById('titlelogin').innerHTML = 'Lỗi, đăng nhập lại'}
+</script>
+</body>
+</html>

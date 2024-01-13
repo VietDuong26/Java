@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/css/normalize.css">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+          href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700&display=swap"
+          rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="/static/js/table2excel.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+  <script src="/static/js/table2excel.js"></script>
+  <title>Giảng viên</title>
+</head>
+
+<body>
+<header>
+  <div style="padding-left: 20px;">
+    <p style="font-size: 25px;font-weight: 700;line-height: 60px;">GIAO DIỆN CHO GIẢNG VIÊN</p>
+  </div>
+  <a th:href="@{/logout}" style="padding-right: 20px;" id="logout_button">
+    <div style="transform: translate(-10px, 4px);"><img id="logout_icon_1" src="/static/img/switch-sever-border.png" alt="">
+      <img id="logout_icon_2" src="/static/img/swittchsever-btn.png" alt="">
+    </div>
+    <p style="font-size: 25px; font-weight: 700; line-height: 60px;">ĐĂNG XUẤT</p>
+  </a>
+</header>
+<div id="content">
+  <div id="list_and_button">
+    <div id="choose_subj">
+      <form name="form_subj" id="place_login" >
+        <select  class="inline-block" name="subj" id="name_subj">
+          <option th:if="${selected_subject== null}" class="opt_subj" value="CHP">Chọn học phần</option>
+          <option class="opt_subj" th:if="${selected_subject!=null}" th:text="${selected_subject.tenmonhoc}" selected></option>
+          <option th:each="subject:${list_subject}" class="opt_subj"  th:value="${subject.tenmonhoc}" th:text="${subject.tenmonhoc}"></option>
+        </select>
+        <select class="inline-block" name="class" id="name_class">
+          <option class="opt_class" th:if="${selected_class==null}" >Chọn lớp học phần</option>
+          <option class="opt_class" th:if="${selected_class!=null}" th:text="${selected_class.lop}" selected></option>
+          <option class="opt_class" th:each="i:${#numbers.sequence(0,list_class.size()-1)}" th:value="${list_class[i]}" th:text="${list_class[i]}" value="l21cn3"></option>
+        </select>
+      </form>
+    </div>
+  </div>
+    <div class="inline block" id="button_for_teacher">
+      <button id="save_button" type="submit" class="btn">Lưu</button>
+      <button id="exprt btn" class="exprt btn" type="submit">Xuất</button>
+    </div>
+  <div id="write_point" >
+    <table class="block" id="table_point">
+      <tbody>
+      <tr class="row-table">
+        <td class="col-header-table-1" style="text-align: center;">
+          <p>Mã sinh viên</p>
+        </td>
+        <td class="col-header-table-2" style="text-align: center;">
+          <p>Họ Tên</p>
+        </td>
+        <td class="col-header-table-3" style="text-align: center;">
+          <p>Điểm quá trình</p>
+        </td>
+        <td class="col-header-table-4" style="text-align: center;">
+          <p>Điểm thi</p>
+        </td>
+        <td class="col-header-table-5" style="text-align: center;">
+          <p>Điểm tổng kết</p>
+        </td>
+        <td class="col-header-table-6" style="text-align: center;">
+          <p>Điểm số</p>
+        </td>
+        <td class="col-header-table-7" style="text-align: center;">
+          <p>Điểm chữ</p>
+        </td>
+        <td class="col-header-table-8" style="text-align: center;">
+          <p>Ghi chú</p>
+        </td>
+      </tr>
+      <tr th:if="${student_list != null}" th:each="student:${student_list}"  class="row-table">
+        <td  style="text-align: center;" >
+          <p th:text="${student.masinhvien}" class="student_code" ></p>
+        </td>
+        <td  style="text-align: center;" >
+          <p th:text="${student.ten}" class="student_name"></p>
+        </td>
+        <td  style="text-align: center;">
+          <input id="qtr" class="qtr"  type="number">
+        </td>
+        <td  style="text-align: center;" >
+          <input id="thi" class="thi" type="number">
+        </td>
+        <td  style="text-align: center;" >
+          <input id="tbchp" class="tbchp" type="number">
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+<script>
+  const name_subj = document.getElementById("name_subj")
+  const name_class = document.getElementById("name_class")
+  const exprt_btn= document.getElementById("exprt btn");
+  name_class.addEventListener("change",function(){
+      window.location='/teacher_homepage?class='+this.value +'&subject='+name_subj.value;
+  })
+
+  exprt_btn.addEventListener("click",function (){
+    debugger;
+    const student_list = [];
+    const student_list1 = [];
+    const student_list2=[];
+    const student_list3=[];
+    const size=document.getElementsByClassName("student_name").length;
+
+    debugger;
+    for (let i = 0; i < size; i++) {
+      const student_dto= {
+        msv:"",ten:"",qtr:"",thi:"",tbchp:"",
+        setMsv: function(x){
+          this.msv=x;
+        },
+        setTen: function(x){
+          this.ten=x;
+        },
+        setQtr: function(x){
+          this.qtr=x;
+        },
+        setThi:function(x){
+          this.thi=x;
+        },
+        setTbchp: function(x){
+          this.tbchp=x;
+        },
+        getMsv: function(){
+          return this.msv;
+        },
+        getTen: function(){
+          return this.ten;
+        }
+        ,
+        getQtr: function(){
+          return this.qtr;
+        }
+        ,
+        getThi: function(){
+          return this.thi;
+        }
+        ,
+        getTbchp: function(){
+          return this.tbchp;
+        }
+      };
+              student_dto.setMsv(document.getElementsByClassName("student_code").item(i).textContent);
+              student_dto.setTen(document.getElementsByClassName("student_name").item(i).textContent);
+              student_dto.setQtr(document.getElementsByClassName("qtr").item(i).value);
+              student_dto.setThi(document.getElementsByClassName("thi").item(i).value);
+              student_dto.setTbchp(document.getElementsByClassName("tbchp").item(i).value);
+              student_list[i]=student_dto.getMsv();
+              student_list1[i]=student_dto.getQtr();
+              student_list2[i]=student_dto.getThi();
+              student_list3[i]=student_dto.getTbchp();
+    }
+    debugger;
+    window.location='/save_sendTeacher?msv='+student_list+'&subject='+name_subj.value+'&qtr='+student_list1+'&thi='+student_list2+'&tbchp='+student_list2;
+  })
+</script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/css/normalize.css">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/base.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+          href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700&display=swap"
+          rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="/static/js/table2excel.js"></script>
+  <title>Quản trị viên</title>
+</head>
+
+<body>
+<header>
+  <div style="padding-left: 20px;">
+    <p style="font-size: 25px;font-weight: 700;line-height: 60px;">GIAO DIỆN CHO SINH VIÊN</p>
+  </div>
+  <a th:href="@{/logout}" style="padding-right: 20px;" id="logout_button">
+    <div style="transform: translate(-10px, 4px);"><img id="logout_icon_1"
+                                                        src="/static/img/switch-sever-border.png" alt="">
+      <img id="logout_icon_2" src="/static/img/swittchsever-btn.png" alt="">
+    </div>
+    <p style="font-size: 25px; font-weight: 700; line-height: 60px;">ĐĂNG XUẤT</p>
+  </a>
+</header>
+<div style="display: flex; justify-content: center; margin-top: 60px;">
+  <button id="create_tablepoint" class="btn">Tạo bảng điểm</button>
+</div>
+<div id="createTab">
+  <form action="" name="classCNPM" class="block"  style="width: 100%; padding: 0 100px; margin: 20px 0;">
+    <select class="inline-block" name="class" id="choose_class">
+      <option class="opt_class" th:if="${selected_class==null}" >Chọn lớp học phần</option>
+      <option class="opt_class" th:if="${selected_class!=null}" th:text="${selected_class.lop}" selected></option>
+      <option th:each="i:${#numbers.sequence(0,class_list.size()-1)}" class="opt_subj" th:text="${class_list[i]}" ></option>
+    </select>
+  </form>
+  <form class="block" name="choose_sub"  action="" style="padding: 0 100px; margin: 20px 0;">
+    <select class="inline-block" name="subject" id="choose_sub">
+      <option th:if="${selected_subject== null}" class="opt_subj" value="CHP">Chọn học phần</option>
+      <option class="opt_subj" th:if="${selected_subject!=null}" th:text="${selected_subject.tenmonhoc}" selected></option>>
+      <option th:each="subject:${subject_list}" class="opt_subj" th:text="${subject.tenmonhoc}"></option>
+    </select>
+  </form>
+  <form action="" name="teacherforclass" class="block" style="width: 100%; padding: 0 100px; margin: 20px 0;">
+    <select class="inline-block" name="teacher" id="choose_teacher">
+    <option th:if="${selected_teacher == null}" class="opt_subj" value="CGV">Chọn giảng viên phụ trách</option>
+    <option th:if="${selected_teacher != null}" class="opt_subj" th:text="${selected_teacher.ten}" selected></option>
+    <option th:each="teacher: ${teacher_list}" th:text="${teacher.ten}" class="opt_subj"></option>
+  </select>
+  </form>
+  <div id="write_point" >
+    <table class="block" id="table_point">
+      <tbody>
+      <tr class="row-table">
+        <td class="col-header-table-1" style="text-align: center;">
+          <p>Mã sinh viên</p>
+        </td>
+        <td class="col-header-table-2" style="text-align: center;">
+          <p>Họ Tên</p>
+        </td>
+        <td class="col-header-table-3" style="text-align: center;">
+          <p>Điểm quá trình</p>
+        </td>
+        <td class="col-header-table-4" style="text-align: center;">
+          <p>Điểm thi</p>
+        </td>
+        <td class="col-header-table-5" style="text-align: center;">
+          <p>Điểm tổng kết</p>
+        </td>
+        <td class="col-header-table-6" style="text-align: center;">
+          <p>Điểm số</p>
+        </td>
+        <td class="col-header-table-7" style="text-align: center;">
+          <p>Điểm chữ</p>
+        </td>
+        <td class="col-header-table-8" style="text-align: center;">
+          <p>Ghi chú</p>
+        </td>
+      </tr>
+      <tr th:if="${student_list != null}" th:each="student:${student_list}"   class="row-table">
+        <td class="col-table-1" name="student_name" style="text-align: center;">
+          <p th:text="${student.masinhvien}" ></p>
+        </td>
+        <td class="col-table-2" style="text-align: center;">
+          <p th:text="${student.ten}" class="name_student" ></p>
+        </td>
+        <td class="col-table-3" style="text-align: center;">
+          <p class="point1_input"   type="number">
+        </td>
+        <td class="col-table-4" style="text-align: center;">
+          <p class="point2_input"  type="number">
+        </td>
+        <td class="col-table-5" style="text-align: center;">
+          <p class="avg_point" ></p>
+        </td>
+        <td class="col-table-6" style="text-align: center;">
+          <p class="number_point" ></p>
+        </td>
+        <td class="col-table-7" style="text-align: center;">
+          <p class="word_point" ></p>
+        </td>
+        <td class="col-table-8" style="text-align: center;">
+          <p class="note"></p>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="float: right; margin-right: 30px;">
+    <button id="cancel_tablepoint" class="btn block">Hủy bảng điểm</button>
+    <button id="save_sent" class="btn block">Lưu và chuyển tiếp bảng điểm</button>
+  </div>
+</div>
+<script>
+  const create_table= document.getElementById("create_tablepoint");
+  const cancel_table= document.getElementById("cancel_tablepoint");
+  const choose_teacher= document.getElementById("choose_teacher");
+  const choose_sub= document.getElementById("choose_sub");
+  const choose_class= document.getElementById("choose_class");
+  choose_teacher.addEventListener("change",function(){
+    window.location='/admin_homepage?class='+choose_class.value +'&subject='+ choose_sub.value+ '&teacher=' + choose_teacher.value;
+    })
+  const save_sent= document.getElementById("save_sent");
+  const student_name= [];
+  debugger;
+  for (let i = 0; i < document.getElementsByClassName("name_student") .length; i++) {
+    student_name[i]=document.getElementsByClassName("name_student").item(i).textContent;
+  }
+  save_sent.addEventListener("click",function (){
+    window.location='/save_sendAdmin?name_student='+student_name + '&class='+choose_class.value + '&subject='+choose_sub.value+ '&teacher='+choose_teacher.value;
+    var table2excel = new Table2Excel();
+    table2excel.export(document.querySelectorAll("#table_point"));
+  })
+
+</script>
+</body>
+
+</html>

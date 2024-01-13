@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,400;12..96,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/normalize.css">
+  <link rel="stylesheet" href="/static/style/main.css">
+  <link rel="stylesheet" href="/static/style/responsive.css">
+</head>
+<body>
+<div class="full-web">
+  <div class="header">
+    <div class="home-btn item-header"><a href="admin.html" class="link-home"><img src="/static/image/home_icon.png" alt="">Trang chủ</a></div>
+    <div class="user-btn item-header">
+      <a href="#" class="link-user">
+        <span class="infor-user" id="js-infor-user"></span>
+        <img src="/static/image/user_icon.png" alt="">
+      </a>
+      <div class="logout-area" id="logout_bt">Đăng xuất<img src="/static/image/logout_icon.png" alt=""></div>
+    </div>
+  </div>
+  <div id="register-subject" class="register-subject" style="margin-top:100px">
+    <form action="" class="box-list sub-list" name="sub-list" >
+      <select name="sub" class="list-choose" id="choose_sub">
+        <option th:if="${choosed_sub==null}" class="item-list title-list" id="sub0" value="sub0" selected>Lựa chọn môn học</option>
+        <option th:if="${choosed_sub!=null}" class="item-list title-list" th:text="${choosed_sub}"  th:value="${choosed_sub}" selected></option>
+        <option th:each="subject:${sub_list}" class="item-list" id="sub1" th:text="${subject.tenmonhoc}" th:value="${subject.tenmonhoc}"></option>
+      </select>
+    </form>
+    <form action="" class="box-list sub-list" name="class-list" >
+      <select name="class" class="list-choose"  id ="choose_class">
+        <option th:if="${choosed_class==null}" class="item-list title-list" id="class0" value="sub0" selected>Lựa chọn lớp</option>
+        <option th:if="${choosed_class!=null}" class="item-list title-list" th:value="${choosed_class}" th:text="${choosed_class}"  selected>Lựa chọn lớp</option>
+        <option th:each="i:${#numbers.sequence(0,class_list.size()-1)}" th:text="${class_list[i]}" class="item-list" id="class1" th:value="${class_list[i]}"></option>
+      </select>
+    </form>
+    <form action="" class="box-list sub-list" name="teacher-list" >
+      <select name="class" class="list-choose"  id ="choose_tea">
+        <option th:if="${choose_tea==null}" class="item-list title-list" id="tea0" value="tea0" selected>Lựa chọn giảng viên</option>
+        <option th:if="${choose_tea!=null}" class="item-list title-list" th:value="${choose_tea}" th:text="${choose_tea}"  selected></option>
+        <option th:each="i:${#numbers.sequence(0,tea_list.size()-1)}" th:text="${tea_list[i]}" class="item-list" id="tea1" th:value="${tea_list[i]}"></option>
+      </select>
+    </form>
+    <table id="table-res-sub1" class="mgn-point" style="text-align: center" >
+      <thead class="mgn-head">
+      <tr>
+        <th class="mgn-head-title">Tên sinh viên</th>
+        <th class="mgn-head-title">Mã sinh viên</th>
+      </tr>
+      </thead>
+      <tbody class="mgn-body">
+        <tr th:if="${student_list!=null}" th:each="student:${student_list}">
+          <td th:text="${student.ten}"></td>
+          <td th:text="${student.masinhvien}"></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="save-res-sub" id="save_button">
+      <button style="float:right; width: 20%;" class="commom-btn">LƯU</button>
+    </div>
+  </div>
+</div>
+<script>
+  const choose_class= document.getElementById("choose_class");
+  const choose_sub=document.getElementById("choose_sub")
+  const save_button= document.getElementById("save_button");
+  const choose_tea=document.getElementById("choose_tea")
+  choose_class.addEventListener("change",function (){
+    window.location='/admin?class='+this.value+"&sub="+choose_sub.value+"&teacher="+choose_tea.value;
+  })
+  save_button.addEventListener("click",function (){
+    window.location='/dangkimonhoc?class='+choose_class.value+"&sub="+choose_sub.value+"&teacher="+choose_tea.value;
+  })
+
+</script>
+<script src="/static/js/logic.js"></script>
+<script src="/static/js/admin.js"></script>
+</body>
+</html>
