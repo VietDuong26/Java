@@ -17,4 +17,5 @@ public interface TeacherRepository extends JpaRepository<Teacher,Long> {
     Page<Teacher> findByMagiaovien(String code, Pageable pageable);
     Teacher findByMagiaovien(String code);
 
+    Teacher findByTen(String name);
 }

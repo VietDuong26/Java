@@ -3,10 +3,7 @@ package com.example.cnpm.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @AllArgsConstructor
@@ -21,19 +18,13 @@ public class Student {
     private long id;
     private String ten;
     private String masinhvien;
+    private String password;
     private String lop;
     private String khoa;
+    @OneToMany(mappedBy = "maSV")
+    private List<Point> diem;
     @ManyToMany(fetch=FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinTable(name="student_teacher",joinColumns = {@JoinColumn(name="student_masinhvien",referencedColumnName = "id")}
-            ,inverseJoinColumns ={@JoinColumn(name="teacher_id",referencedColumnName = "id")})
-    private List<Teacher> teachers= new ArrayList<>();
-    @ManyToMany(fetch=FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinTable(name="student_subject",joinColumns = {@JoinColumn(name="student_masinhvien",referencedColumnName = "id")}
-            ,inverseJoinColumns ={@JoinColumn(name="subject_id",referencedColumnName = "id")})
-    private List<Subject> subjects= new ArrayList<>();
-    @ManyToMany(fetch=FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinTable(name="student_role",joinColumns = {@JoinColumn(name="student_masinhvien",referencedColumnName = "id")}
+    @JoinTable(name="student_role",joinColumns = {@JoinColumn(name="student_id",referencedColumnName = "id")}
             ,inverseJoinColumns ={@JoinColumn(name="role_id",referencedColumnName = "id")})
-    private List<Role> role= new ArrayList<>();
-    private String password;
+    private Set<Role> role= new HashSet<>();
 }

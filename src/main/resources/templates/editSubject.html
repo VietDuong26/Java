@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="container">
-  <h2>Vertical (basic) form</h2>
+  <h2>Sửa thông tin môn học</h2>
   <form th:action="@{/insertSubject}" method="post" th:object="${subject}">
     <div class="form-group">
       <label>STT:</label>
@@ -30,18 +30,6 @@
     <div class="form-group">
       <label>Số tín chỉ:</label>
       <input type="text" th:field="*{sotinchi}" class="form-control" id="stc" name="stc">
-    </div>
-    <div class="form-group">
-      <label>Điểm thành phần:</label>
-      <input type="text" th:field="*{diemthanhphan}" class="form-control" id="tp" name="tp">
-    </div>
-    <div class="form-group">
-      <label>Điểm thi:</label>
-      <input type="text" th:field="*{diemthi}" class="form-control" id="dt" name="dt">
-    </div>
-    <div class="form-group">
-      <label>Điểm trung bình cộng học phần:</label>
-      <input type="text" th:field="*{tbchp}" class="form-control" id="tbchp" name="tbchp">
     </div>
     <button type="submit" class="btn btn-default">Sửa</button>
   </form>

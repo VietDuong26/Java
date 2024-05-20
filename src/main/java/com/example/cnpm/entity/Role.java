@@ -3,6 +3,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -16,8 +17,9 @@ public class Role {
     private long id;
     private String name;
     @ManyToMany(mappedBy = "role")
-    private List<Student> users;
+    private Set<Student> student;
     @ManyToMany(mappedBy = "role")
-    private List<Teacher> teachers;
-
+    private Set<Teacher> teacher;
+    @ManyToMany(mappedBy = "role")
+    private Set<Admin> admin;
 }

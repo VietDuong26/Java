@@ -23,23 +23,27 @@ public class WebConfig {
     public static PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+    @Autowired
+    SuccessHandler successHandler;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((requests)-> requests
-                        .requestMatchers("/login/**","/","/regist/**","/insertStudent/**","/insertTeacher/**","/insertAdmin/**").permitAll()
-                        .requestMatchers("/static/css/**",
+                        .requestMatchers("/login/**","/","/insertAdmin/**","/index/**").permitAll()
+                        .requestMatchers("/static/json/**",
                                                   "/static/js/**",
-                                                  "/static/img/**").permitAll()
-                        .requestMatchers("/Student/**").hasAnyRole("STUDENT","TEACHER","ADMIN")
-                        .requestMatchers("/Teacher/**").hasAnyRole("ADMIN","TEACHER")
-                        .requestMatchers("/Admin/**").hasRole("ADMIN")
+                                                  "/static/image/**",
+                                                  "/static/style/**").permitAll()
+                        .requestMatchers("/student_homepage/**").hasRole("STUDENT")
+                        .requestMatchers("/teacher_homepage").hasAnyRole("TEACHER")
+                        .requestMatchers("/admin","/insertStudent/**","/insertTeacher/**","/insertSubject/**","/Subject/**","/Student/**","/Teacher/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(form->form.loginPage("/login")
                         .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/Student")
+                        .defaultSuccessUrl("/student_homepage")
+                        .successHandler(successHandler)
                         .permitAll())
                 .logout((logout)->logout.logoutUrl("/logout")
-                        .logoutSuccessUrl("/index")
+                        .logoutSuccessUrl("/login")
                         .permitAll());
         return http.build();
     }

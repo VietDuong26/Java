@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="container">
-  <h2>Vertical (basic) form</h2>
+  <h2>Thêm mới sinh viên</h2>
   <form th:action="@{/insertStudent}" method="post" th:object="${student}">
     <div class="form-group">
       <label >Họ và Tên:</label>
@@ -31,7 +31,10 @@
       <label>Mật khẩu:</label>
       <input type="password" th:field="*{password}" class="form-control" id="pw" name="pw">
     </div>
-    <button type="submit" class="btn btn-default">Thêm</button>
+    <div style="display:flex">
+      <button type="submit" class="btn btn-default">Thêm</button>
+      <button th:href="@{/Student}" style="margin-left: 100px" class="btn btn-default">Hủy</button>
+    </div>
   </form>
 </div>
 </body>

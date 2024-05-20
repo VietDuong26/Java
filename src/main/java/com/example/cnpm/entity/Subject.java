@@ -3,7 +3,9 @@ package com.example.cnpm.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -20,13 +22,9 @@ public class Subject {
     private String kihieu;
     private int sotinchi;
     private int heso;
-    private float diemthanhphan;
-    private float diemthi;
-    private float tbchp;
-    private float diemso;
-    private String diemchu;
-    @ManyToMany(mappedBy = "subjects")
-    private List<Student> sinhvien;
-   @ManyToMany(mappedBy = "subjects")
-    private List<Teacher> giaovien;
+   @OneToMany(mappedBy = "maMH")
+    private Set<PhanCong> phancong;
+    @OneToMany(mappedBy = "maMH")
+    private List<Point> diem;
+
 }

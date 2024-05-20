@@ -1,0 +1,12 @@
+@media screen and (max-width: 560px){
+    a.link-login, a.link-home {
+        font-size: 16px;
+    }
+    .link-login>img, .link-home>img {
+        width: 20px;
+        transform: translateY(4.35px);
+    }
+    img.login-request-img2 {
+        width: calc(100% - 100px);
+    }
+}

@@ -1,8 +1,7 @@
 package com.example.cnpm.controller;
 
-import com.example.cnpm.dto.StudentDTO;
-import com.example.cnpm.dto.SubjectDTO;
 import com.example.cnpm.dto.TeacherDTO;
+import com.example.cnpm.entity.Student;
 import com.example.cnpm.service.StudentService;
 import com.example.cnpm.service.SubjectService;
 import com.example.cnpm.service.TeacherService;
@@ -10,14 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 public class TeacherController {
@@ -58,22 +57,6 @@ public class TeacherController {
         service.delete(id);
         return "redirect:/Teacher";
     }
-    @RequestMapping ("/findTeacherByName/{name}")
-    public String findByName(Model model,@PathVariable("name")String name,@RequestParam(name="page") Optional<Integer> page,
-                             @RequestParam(name="size") Optional<Integer> size,
-                             @RequestParam(name="sort",required=false,defaultValue = "ASC")String sort ){
-        int  pageIndex = page.orElse(1);
-        int pageSize=size.orElse(3);
-        Pageable pageable= PageRequest.of(pageIndex-1,pageSize);
-        Page<TeacherDTO> list= service.findByName(name,pageable);
-        int totalPage=list.getTotalPages();
-        long totalItem= list.getTotalElements();
-        model.addAttribute("list_subject",list);
-        model.addAttribute("totalPage",totalPage);
-        model.addAttribute("totalItem",totalItem);
-        model.addAttribute("currentPage",pageIndex);
-        return "teacher";
-    }
     @GetMapping(name="/editTeacher",value="/editTeacher/{id}")
     public String edit(Model model,@PathVariable("id")long id){
         model.addAttribute("teacher",service.findById(id));
@@ -83,6 +66,23 @@ public class TeacherController {
     public String edit(@ModelAttribute("teacher") TeacherDTO teacherDTO) throws IOException {
         service.insert(teacherDTO);
         return "redirect:/Teacher";
+    }
+    @RequestMapping ("/findTeacherByName/{name}")
+    public String findByName(Model model,@PathVariable("name")String name
+                            ,@RequestParam(name="page") Optional<Integer> page,
+                             @RequestParam(name="size") Optional<Integer> size,
+                             @RequestParam(name="sort",required=false,defaultValue = "ASC")String sort ){
+        int  pageIndex = page.orElse(1);
+        int pageSize=size.orElse(3);
+        Pageable pageable= PageRequest.of(pageIndex-1,pageSize);
+        Page<TeacherDTO> list= service.findByName(name,pageable);
+        int totalPage=list.getTotalPages();
+        long totalItem= list.getTotalElements();
+        model.addAttribute("list_teacher",list);
+        model.addAttribute("totalPage",totalPage);
+        model.addAttribute("totalItem",totalItem);
+        model.addAttribute("currentPage",pageIndex);
+        return "teacher";
     }
     @RequestMapping ("/findTeacherByCode/{code}")
     public String findByCode(Model model,@PathVariable("code")String code,@RequestParam(name="page") Optional<Integer> page,
@@ -100,33 +100,37 @@ public class TeacherController {
         model.addAttribute("currentPage",pageIndex);
         return "teacher";
     }
-    @GetMapping(value="/insertAdmin",name="/insertAdmin")
-    String show_insert_form1(Model model){
-        model.addAttribute("admin",new TeacherDTO());
-        return "insertAdmin";
+    @GetMapping("/teacher_homepage")
+    String teacher_hompage(Model model,@RequestParam(value = "class",required = false)String classes,@RequestParam(value = "sub",required = false)String sub){
+        Set<String> class_list= studentService.findAllClasses();
+        Set<String> sub_list= service.findAllSubject();
+        if(classes!=null){
+            model.addAttribute("choosed_class",classes);
+        }else{
+            model.addAttribute("choosed_class",null);
+        }
+        if(sub!=null){
+            model.addAttribute("choosed_sub",sub);
+        }else{
+            model.addAttribute("choosed_sub",null);
+        }
+        if(classes!=null && sub!=null){
+            Set<Student> student_list= service.findAllStudent(classes,sub);
+            model.addAttribute("student_list",student_list);
+        }
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        TeacherDTO teacherDTO= service.findByCode(authentication.getName());
+        model.addAttribute("teacher",teacherDTO);
+        model.addAttribute("class_list",class_list);
+        model.addAttribute("sub_list",sub_list);
+        return "teacher_homepage";
     }
-    @PostMapping(value="/insertAdmin",name="/insertAdmin")
-    String insert_Admin(Model model, @ModelAttribute("admin")TeacherDTO teacherDTO){
-        service.insertAdmin(teacherDTO);
-        return "redirect:/Teacher";
-    }
-    @GetMapping("/qtv")
-    String qtv(Model model){
-        List<SubjectDTO>list= subjectService.getAll();
-        Set<String> list1=studentService.findAllClasses();
-        List<StudentDTO>list2= studentService.findStudentByTenmonhoc("Toán Đại số");
-        List<TeacherDTO> list4=service.findAll();
-        List<StudentDTO> list3= studentService.findByLop("21CN3");
-        model.addAttribute("subject_list",list);
-        model.addAttribute("classes",list1);
-        model.addAttribute("student_list",list2);
-        model.addAttribute("teacher_list",list4);
-        return "qtv";
-    }
-    @PostMapping("/save")
-    String save(Model model,@RequestParam("teacher_name")String name,
-                @RequestParam("subject")String subject_name,
-                @RequestParam("class")String classes){
-        return"";
+    @GetMapping("/nhapdiem")
+    String nhapdiem( @RequestParam("sub")String sub,
+                    @RequestParam("msv")String[] msv,
+                    @RequestParam("qtr")Float[] qtr,
+                    @RequestParam("thi")Float[]thi){
+        service.nhapdiem(sub,msv,qtr,thi);
+    return "redirect:/teacher_homepage";
     }
 }

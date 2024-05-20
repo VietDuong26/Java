@@ -2,14 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Thêm mới sinh viên</title>
+  <title>Thêm mới môn học</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="container">
-  <h2>Vertical (basic) form</h2>
+  <h2>Thêm mới môn học</h2>
   <form th:action="@{/insertSubject}" method="post" th:object="${subject}">
     <div class="form-group">
       <label>Tên môn học:</label>
@@ -27,15 +27,10 @@
       <label>Số tín chỉ:</label>
       <input type="text" th:field="*{sotinchi}" class="form-control" id="stc" name="stc">
     </div>
-    <div class="form-group">
-      <label>Điểm thành phần:</label>
-      <input type="text" th:field="*{diemthanhphan}" class="form-control" id="tp" name="tp">
+    <div style="display:flex">
+      <button type="submit" class="btn btn-default">Thêm</button>
+      <button th:href="@{/Subject}" style="margin-left: 100px" class="btn btn-default">Hủy</button>
     </div>
-    <div class="form-group">
-      <label>Điểm thi:</label>
-      <input type="text" th:field="*{diemthi}" class="form-control" id="dt" name="dt">
-    </div>
-    <button type="submit" class="btn btn-default">Thêm</button>
   </form>
 </div>
 </body>

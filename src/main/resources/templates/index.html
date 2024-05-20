@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý điểm</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,400;12..96,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/normalize.css">
+    <link rel="stylesheet" href="/static/style/main.css">
+    <link rel="stylesheet" href="/static/style/responsive.css">
+</head>
+<body>
+    <div id="homepage_nolog">
+        <div class="header">
+            <div class="home-btn item-header"><a th:href="@{/index}" class="link-home"><img src="/static/image/home_icon.png" alt="">Trang chủ</a></div>
+            <div class="login-area item-header"><a th:href="@{/login}" class="link-login">Đăng nhập<img src="/static/image/login_icon.png" alt=""></a></div>
+        </div>
+        <div class="containter">
+            <div class="login-request">
+                <img class="login-request-img1" src="/static/image/element_2.png" alt="">
+                <p class="login-request-text">Vui lòng đăng nhập để truy cập!!</p>
+                <img class="login-request-img2" src="/static/image/element_1.png" alt="">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

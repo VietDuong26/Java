@@ -22,13 +22,17 @@
 </head>
 <body>
 <div class="container">
-  <div>
-    <select name="options" id="options">
-      <option value="Tên">Tên</option>
-      <option value="Kí hiệu">Kí hiệu</option>
-    </select>
-    <input type="text" placeholder="Texting..." id="namesearch" name="namesearch" />
-    <a onclick="myFunction()" >Search</a>
+  <div style="display:flex">
+    <div><a th:href="@{/admin}" style="text-decoration: underline">Trở lại</a></div>
+    <div style="margin-left:30px">
+      <select name="options" id="options">
+        <option value="Tên">Tên</option>
+        <option value="Kí hiệu">Kí hiệu</option>
+      </select>
+    </div>
+    <div style="margin-left: 10px;margin-right:10px"><input type="text" placeholder="Texting..." id="namesearch" name="namesearch" /></div>
+    <div style="margin-right:50px"><a onclick="myFunction()" >Search</a></div>
+    <div><a th:href="@{/insertSubject}">Thêm mới</a></div>
   </div>
   <table class="table">
     <thead>
@@ -38,12 +42,6 @@
       <th>Kí hiệu</th>
       <th>Hệ số</th>
       <th>Số tín chỉ</th>
-      <th>Điểm thành phần</th>
-      <th>Điểm thi</th>
-      <th>TBCHP</th>
-      <th>Điểm số</th>
-      <th>Điểm chữ</th>
-      <th>Mô tả</th>
       <th>Hành động</th>
     </tr>
     </thead>
@@ -54,12 +52,6 @@
       <td th:text="${subject.kihieu}"></td>
       <td th:text="${subject.heso}"></td>
       <td th:text="${subject.sotinchi}"></td>
-      <td th:text="${subject.diemthanhphan}"></td>
-      <td th:text="${subject.diemthi}"></td>
-      <td th:text="${subject.tbchp}"></td>
-      <td th:text="${subject.diemso}"></td>
-      <td th:text="${subject.diemchu}"></td>
-      <td th:text="${subject.note}"></td>
       <td>
         <a th:href="@{'/editSubject/'+${subject.getId()}}">Sửa</a>
         <a th:href="@{'/deleteSubject/'+${subject.getId()}}">Xóa</a>

@@ -1,7 +1,7 @@
 package com.example.cnpm.service;
 
 import com.example.cnpm.dto.StudentDTO;
-import com.example.cnpm.dto.SubjectDTO;
+import com.example.cnpm.entity.Point;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -16,13 +16,14 @@ public interface StudentService {
     StudentDTO findById(long id);
     void insert(StudentDTO studentDTO);
     void delete(long id);
-    Page<SubjectDTO> findAll(String code);
-    void dang_ki_mon_hoc(List<SubjectDTO> list);
+
     StudentDTO findByName(String name);
-    List<StudentDTO> findByLop(String lop);
+    Set<StudentDTO> findByLop(String lop);
 
     Set<String> findAllClasses();
+    Set<StudentDTO> findStudentByTenmonhoc(String subject);
 
-    List<StudentDTO> findStudentByTenmonhoc(String subject);
-    List<StudentDTO> findAll();
+
+    List<StudentDTO> findStudentsByClass(String classes);
+    List<Point> getAllPoints();
 }

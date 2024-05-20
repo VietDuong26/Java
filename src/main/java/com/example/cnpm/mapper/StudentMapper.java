@@ -12,7 +12,8 @@ public class StudentMapper {
                 .lop(studentDTO.getLop())
                 .masinhvien(studentDTO.getMasinhvien())
                 .khoa(studentDTO.getKhoa())
-                .subjects(studentDTO.getSubjects())
+                .password(studentDTO.getPassword())
+                .role(studentDTO.getRoles())
                 .build();
     }
     public StudentDTO convertToDTO(Student student){
@@ -22,7 +23,8 @@ public class StudentMapper {
                 .lop(student.getLop())
                 .masinhvien(student.getMasinhvien())
                 .khoa(student.getKhoa())
-                .subjects(student.getSubjects())
+                .password(student.getPassword())
+                .roles(student.getRole())
                 .build();
     }
 }

@@ -21,15 +21,11 @@ public class Teacher {
     private long id;
     private String ten;
     private String magiaovien;
-    @ManyToMany(mappedBy = "teachers")
-    private List<Student> students;
-    @ManyToMany(fetch=FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinTable(name="teacher_subject",joinColumns = {@JoinColumn(name="teacher_id",referencedColumnName = "id")}
-            ,inverseJoinColumns ={@JoinColumn(name="subject_id",referencedColumnName = "id")})
-    private List<Subject> subjects= new ArrayList<>();
+    @OneToMany(mappedBy = "maGV")
+    private Set<PhanCong> phancong;
     @ManyToMany(fetch=FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name="teacher_role",joinColumns = {@JoinColumn(name="teacher_id",referencedColumnName = "id")}
             ,inverseJoinColumns ={@JoinColumn(name="role_id",referencedColumnName = "id")})
-    private List<Role> role= new ArrayList<>();
+    private Set<Role> role= new HashSet<>();
     private String password;
 }

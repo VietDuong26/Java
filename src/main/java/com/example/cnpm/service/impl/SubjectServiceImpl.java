@@ -1,7 +1,6 @@
 package com.example.cnpm.service.impl;
 
-import com.example.cnpm.dto.SubjectDTO;
-import com.example.cnpm.mapper.SubjectMapper;
+import com.example.cnpm.entity.Subject;
 import com.example.cnpm.repository.SubjectRepository;
 import com.example.cnpm.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,38 +8,38 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class SubjectServiceImpl implements SubjectService {
     @Autowired
     SubjectRepository subjectRepository;
-    @Autowired
-    SubjectMapper mapper;
+    
 
     @Override
-    public Page<SubjectDTO> getAll(Pageable pageable) {
-        return subjectRepository.findAll(pageable).map(x->mapper.convertToDTO(x));
+    public Page<Subject> getAll(Pageable pageable) {
+        return subjectRepository.findAll(pageable);
     }
 
     @Override
-    public List<SubjectDTO> getAll() {
-        return subjectRepository.findAll().stream().map(x->mapper.convertToDTO(x)).toList();
+    public Set<Subject> getAll() {
+        return new HashSet<Subject>(subjectRepository.findAll());
     }
 
     @Override
-    public Page<SubjectDTO> findByName(String name,Pageable pageable) {
-        return subjectRepository.findByTenmonhoc(name,pageable).map(x->mapper.convertToDTO(x));
+    public Page<Subject> findByName(String name,Pageable pageable) {
+        return subjectRepository.findByTenmonhoc(name,pageable);
     }
 
     @Override
-    public Page<SubjectDTO> findByCode(String code,Pageable pageable) {
-        return subjectRepository.findByKihieu(code,pageable).map(x->mapper.convertToDTO(x));
+    public Page<Subject> findByCode(String code,Pageable pageable) {
+        return subjectRepository.findByKihieu(code,pageable);
     }
 
     @Override
-    public void insert(SubjectDTO subjectDTO) {
-        subjectRepository.save(mapper.convertToEntity(subjectDTO));
+    public void insert(Subject subject) {
+        subjectRepository.save(subject);
     }
 
     @Override
@@ -49,12 +48,14 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public SubjectDTO findById(long id) {
-        return mapper.convertToDTO(subjectRepository.findById(id).get());
+    public Subject findById(long id) {
+        return subjectRepository.findById(id).get();
     }
 
     @Override
-    public SubjectDTO findByName(String name) {
-        return mapper.convertToDTO(subjectRepository.findByTenmonhoc(name));
+    public Subject findByName(String name) {
+        return subjectRepository.findByTenmonhoc(name);
     }
+
+
 }

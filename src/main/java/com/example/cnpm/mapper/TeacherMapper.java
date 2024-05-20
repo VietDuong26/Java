@@ -11,6 +11,9 @@ public class TeacherMapper {
                 .id(teacherDTO.getId())
                 .ten(teacherDTO.getTen())
                 .magiaovien(teacherDTO.getMagiaovien())
+                .password(teacherDTO.getPassword())
+
+                .role(teacherDTO.getRoles())
                 .build();
     }
     public TeacherDTO convertToDTO(Teacher teacher){
@@ -18,6 +21,9 @@ public class TeacherMapper {
                 .id(teacher.getId())
                 .ten(teacher.getTen())
                 .magiaovien(teacher.getMagiaovien())
+                .password(teacher.getPassword())
+
+                .roles(teacher.getRole())
                 .build();
     }
 }

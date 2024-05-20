@@ -22,13 +22,17 @@
 </head>
 <body>
 <div class="container">
-    <div>
-        <select name="options" id="options">
-            <option value="Tên">Tên</option>
-            <option value="Mã sinh viên">Mã sinh viên</option>
-        </select>
-        <input type="text" placeholder="Texting..." id="namesearch" name="namesearch" />
-        <a onclick="myFunction()" >Search</a>
+    <div style="display:flex;">
+        <div><a th:href="@{/admin}" style="text-decoration: underline">Trở lại</a></div>
+        <div style="margin-left:30px">
+            <select name="options" id="options">
+                <option value="Tên">Tên</option>
+                <option value="Mã sinh viên">Mã sinh viên</option>
+            </select>
+        </div>
+        <div style="margin-left: 10px;margin-right:10px"><input type="text" placeholder="Texting..." id="namesearch" name="namesearch" /></div>
+        <div style="margin-right:50px"><a onclick="myFunction()" >Search</a></div>
+        <div><a th:href="@{/insertStudent}">Thêm mới</a></div>
     </div>
     <table class="table">
         <thead>
@@ -37,6 +41,7 @@
             <th>Họ và tên</th>
             <th>Lớp</th>
             <th>Mã sinh viên</th>
+            <th>Khoa</th>
             <th>Hành động</th>
         </tr>
         </thead>
@@ -46,6 +51,7 @@
             <td th:text="${student.ten}"></td>
             <td th:text="${student.lop}"></td>
             <td th:text="${student.masinhvien}"></td>
+            <td th:text="${student.khoa}"></td>
             <td>
                 <a th:href="@{'/editStudent/'+${student.getId()}}">Sửa</a>
                 <a th:href="@{'/deleteStudent/'+${student.getId()}}">Xóa</a>

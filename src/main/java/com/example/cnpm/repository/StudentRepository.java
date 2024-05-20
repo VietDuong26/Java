@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student,Long> {
@@ -22,7 +23,15 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
     Student findByTen(String ten);
     List<Student> findByLop(String lop);
     @Query("select st from Student st where exists (select sb from Subject sb where sb.tenmonhoc=:name)")
-    List<Student> findStudentBySubjectName(@Param("name") String name);
+    Set<Student> findStudentBySubjectName(@Param("name") String name);
+    @Query("select st from Student st where st.lop=:class and exists(select sb from Subject sb where sb.tenmonhoc=:name)")
+    Set<Student> findStudentByClassAndSub(@Param("class")String classes,@Param("name")String subject_name);
+    @Query("select sb from Subject sb where exists(select st from Student st where st.masinhvien=?1) and sb.tenmonhoc=?2")
+    Set<Subject> findAllSubjectsByStudentCode(String msv,String subject_name);
+
+    @Query(value = "select count(*) from student_subject st_sb where st_sb.student_masinhvien=?1 and student_subject.subject_id=?2",nativeQuery = true)
+    long checkIfSubjectExist(String msv,long subject_id);
 
 
+    List<Student> findStudentsByLop(String classes);
 }
